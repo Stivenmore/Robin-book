@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'package:books/UI/Home/Home.dart';
+import 'package:books/UI/Utils/Animations/Sample/FadeAnimation.dart';
 import 'package:books/UI/Utils/Colors.dart';
 import 'package:books/UI/Utils/Responsive/responsive.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,19 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  @override
+  void initState() {
+    super.initState();
+    intothehome(context);
+  }
+
+  void intothehome(BuildContext context) {
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (_) => const Home()), (route) => false);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Responsive responsive = Responsive(context);
@@ -30,57 +45,73 @@ class _SplashState extends State<Splash> {
                   children: [
                     Transform.translate(
                       offset: Offset(0, responsive.hp(18) * value),
-                      child: SizedBox(
-                        height: 200,
-                        width: 200,
-                        child: Lottie.asset(
-                          "assets/lottie/loading.json",
-                          reverse: true,
+                      child: FadeAnimation(
+                        700,
+                        SizedBox(
+                          height: 200,
+                          width: 200,
+                          child: Lottie.asset(
+                            "assets/lottie/loading.json",
+                            reverse: true,
+                          ),
                         ),
                       ),
                     ),
                     Transform.translate(
                       offset: Offset(0, responsive.hp(19) * value),
-                      child: Text(
-                        'ROBIN BOOK',
-                        style: GoogleFonts.abhayaLibre(
-                            textStyle: const TextStyle(
-                                fontSize: 26, fontWeight: FontWeight.bold)),
+                      child: FadeAnimation(
+                        750,
+                        Text(
+                          'ROBIN BOOK',
+                          style: GoogleFonts.abhayaLibre(
+                              textStyle: const TextStyle(
+                                  fontSize: 26, fontWeight: FontWeight.bold)),
+                        ),
                       ),
                     ),
                     Transform.translate(
                       offset: Offset(0, responsive.hp(21) * value),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          'Tu biblioteca favorita, al alcanze de tu mano.',
-                          style: GoogleFonts.abhayaLibre(
-                            textStyle: const TextStyle(fontSize: 20),
+                      child: FadeAnimation(
+                        800,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            'Tu biblioteca favorita, al alcanze de la mano.',
+                            style: GoogleFonts.abhayaLibre(
+                              textStyle: const TextStyle(fontSize: 20),
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
                     Transform.translate(
                       offset: Offset(0, responsive.hp(25) * value),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          'Comparte con nosotros un mundo de imaginación e historias fantásticas y disfruta de un buen libro.',
-                          style: GoogleFonts.abhayaLibre(
-                            textStyle: const TextStyle(fontSize: 20),
+                      child: FadeAnimation(
+                        850,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            'Comparte con nosotros un mundo de imaginación e historias fantásticas y disfruta de un buen libro.',
+                            style: GoogleFonts.abhayaLibre(
+                              textStyle: const TextStyle(
+                                  fontSize: 20, fontStyle: FontStyle.italic),
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
                     Transform.translate(
                       offset: Offset(0.0, responsive.height * (1.4 - value)),
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: CircularProgressIndicator(
-                            color: BookColor.pinkred,
-                          )),
+                      child: FadeAnimation(
+                        900,
+                        Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: CircularProgressIndicator(
+                              color: BookColor.pinkred,
+                            )),
+                      ),
                     ),
                   ],
                 ),

@@ -109,7 +109,7 @@ class _SplashState extends State<Splash> {
                         Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: CircularProgressIndicator(
-                              color: BookColor.pinkred,
+                              color: BookColor.orangered,
                             )),
                       ),
                     ),

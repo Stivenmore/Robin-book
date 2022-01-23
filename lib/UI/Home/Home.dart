@@ -27,7 +27,7 @@ class Home extends StatelessWidget {
                       'Hola',
                       style: GoogleFonts.abhayaLibre(
                           textStyle: const TextStyle(
-                              fontSize: 34, fontWeight: FontWeight.w800)),
+                              fontSize: 38, fontWeight: FontWeight.w800)),
                     ),
                     IconButton(
                         onPressed: () {},

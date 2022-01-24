@@ -3,10 +3,12 @@
 import 'package:books/Logic/Models/Standart/ModelSearch.dart';
 import 'package:books/Logic/Provider/BookProvider.dart';
 import 'package:books/UI/Details/Details.dart';
+import 'package:books/UI/Favorite/Favorite.dart';
 import 'package:books/UI/Search/Search.dart';
 import 'package:books/UI/Utils/Animations/Sample/FadeAnimation.dart';
 import 'package:books/UI/Utils/Colors.dart';
 import 'package:books/UI/Utils/Responsive/responsive.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,42 @@ class _HomeState extends State<Home> {
   TextEditingController textController = TextEditingController();
   int des = 0;
   int rec = 0;
+
+  Widget showDialogCreate() {
+    return AlertDialog(
+      title: Text(
+        'Robin Book',
+        style: GoogleFonts.abhayaLibre(),
+      ),
+      content: Row(
+        children: [
+          SizedBox(
+            height: 50,
+            width: 70,
+            child: Image.asset(
+              'assets/RobinBook.png',
+              height: 50,
+              width: 70,
+            ),
+          ),
+          Text(
+            'Do you like Robin Book?',
+            style: GoogleFonts.abhayaLibre(),
+          ),
+        ],
+      ),
+      actions: [
+        IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(
+              Icons.check,
+              color: BookColor.orangebold,
+            ))
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +81,10 @@ class _HomeState extends State<Home> {
                 color: BookColor.orangered,
               ),
               child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Favoritos()));
+                  },
                   icon: const Icon(
                     Icons.favorite,
                     color: Colors.white,
@@ -103,7 +144,7 @@ class _HomeState extends State<Home> {
                                 color: BookColor.gray2,
                               ),
                             ),
-                            hintText: 'Buscar',
+                            hintText: 'Search',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: BorderSide(color: BookColor.gray1),
@@ -120,7 +161,11 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () async {
+                          return showCupertinoDialog(
+                              context: context,
+                              builder: (_) => showDialogCreate());
+                        },
                         child: Container(
                           height: 50,
                           width: 50,

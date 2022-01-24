@@ -6,6 +6,7 @@ import 'package:books/Logic/Abstractions/AbstractionBook.dart';
 import 'package:books/Logic/Models/Standart/ModelBook.dart';
 import 'package:books/Logic/Models/Standart/ModelSearch.dart';
 import 'package:books/UI/Utils/Implement/deboucer.dart';
+import 'package:books_finder/books_finder.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -104,6 +105,27 @@ class BookProvider with ChangeNotifier {
           notifyListeners();
           break;
       }
+    }
+  }
+
+  Future getSearchForApiGoogle({required String q}) async {
+    final List<Book> books = await queryBooks(
+      q,
+      maxResults: 3,
+      printType: PrintType.books,
+      orderBy: OrderBy.relevance,
+    );
+    if (books[1].info.imageLinks.isNotEmpty &&
+        books[1].info.description != '') {
+      return {
+        "MapImage": books[1].info.imageLinks.values.first.toString(),
+        "Description": books[1].info.description
+      };
+    } else {
+      return {
+        "MapImage": books[2].info.imageLinks.values.first.toString(),
+        "Description": books[2].info.description
+      };
     }
   }
 

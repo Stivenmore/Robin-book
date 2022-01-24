@@ -31,6 +31,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        title: 'Books', debugShowCheckedModeBanner: false, home: Splash());
+        title: 'Robin Books',
+        debugShowCheckedModeBanner: false,
+        home: Splash());
   }
 }

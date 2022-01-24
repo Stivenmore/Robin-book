@@ -1,7 +1,10 @@
 // ignore_for_file: file_names
 
+import 'dart:convert';
+
 import 'package:books/Logic/Models/Standart/ModelSearch.dart';
 import 'package:books/Logic/Provider/BookProvider.dart';
+import 'package:books/UI/Details/Details.dart';
 import 'package:books/UI/Utils/Colors.dart';
 import 'package:books/UI/Utils/Responsive/responsive.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +12,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class Search extends StatefulWidget {
-  Search({Key? key}) : super(key: key);
+  const Search({Key? key}) : super(key: key);
 
   @override
   State<Search> createState() => _SearchState();
@@ -31,77 +34,94 @@ class _SearchState extends State<Search> {
                   physics: const BouncingScrollPhysics(),
                   itemCount: snap.data!.length,
                   itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 100,
-                        width: responsive.width,
-                        decoration: BoxDecoration(
-                            color: BookColor.gray2.withOpacity(0.3),
-                            borderRadius: BorderRadius.circular(16)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: SizedBox(
-                                    height: 100,
-                                    width: 130,
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(16),
-                                        child: Image.asset(
-                                          'assets/RobinBook.png',
-                                          fit: BoxFit.cover,
-                                        )),
-                                  ),
-                                ),
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 100,
-                                      child: Text(
-                                        snap.data![index].title!,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                    return GestureDetector(
+                      onTap: () async {
+                        final detailbook = await provider.getSearchForApiGoogle(
+                          q: snap.data![index].title!,
+                        );
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => Details(
+                                    description: detailbook["Description"],
+                                    urlImage: detailbook["MapImage"],
+                                    modelSearch: snap.data![index])));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 100,
+                          width: responsive.width,
+                          decoration: BoxDecoration(
+                              color: BookColor.gray2.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(16)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: SizedBox(
+                                      height: 100,
+                                      width: 130,
+                                      child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          child: Image.asset(
+                                            'assets/RobinBook.png',
+                                            fit: BoxFit.cover,
+                                          )),
                                     ),
-                                    SizedBox(
-                                      width: 100,
-                                      child: Text(
-                                        snap.data![index].author![0]!,
-                                        overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 100,
+                                        child: Text(
+                                          snap.data![index].title!,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
+                                      SizedBox(
+                                        width: 100,
+                                        child: Text(
+                                          snap.data![index].author![0]!,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    child: Text(
+                                      'Edicción',
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  child: Text(
-                                    '1ra Ediction',
-                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 100,
-                                  child: Text(
-                                    snap.data![index].firtspublicyear
-                                        .toString(),
-                                    overflow: TextOverflow.ellipsis,
+                                  SizedBox(
+                                    width: 100,
+                                    child: Text(
+                                      snap.data![index].firtspublicyear
+                                          .toString(),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     );

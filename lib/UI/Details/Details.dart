@@ -1,12 +1,14 @@
 // ignore_for_file: file_names
 
+import 'package:books/Logic/Models/Hive/HiveBook.dart';
 import 'package:books/Logic/Models/Standart/ModelSearch.dart';
 import 'package:books/UI/Utils/Colors.dart';
 import 'package:books/UI/Utils/Responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 
-class Details extends StatelessWidget {
+class Details extends StatefulWidget {
   final String description;
   final String urlImage;
   final ModelSearch modelSearch;
@@ -17,6 +19,11 @@ class Details extends StatelessWidget {
       required this.modelSearch})
       : super(key: key);
 
+  @override
+  State<Details> createState() => _DetailsState();
+}
+
+class _DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
     Responsive responsive = Responsive(context);
@@ -56,7 +63,7 @@ class Details extends StatelessWidget {
                         width: 160,
                         child: FadeInImage.assetNetwork(
                           placeholder: 'assets/RobinBook.png',
-                          image: urlImage,
+                          image: widget.urlImage,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -73,10 +80,12 @@ class Details extends StatelessWidget {
                                 'Number pages',
                                 style: GoogleFonts.abhayaLibre(),
                               ),
-                              Text(modelSearch.numberofpagemediam!.toString() ==
+                              Text(widget.modelSearch.numberofpagemediam!
+                                          .toString() ==
                                       '0'
                                   ? ''
-                                  : modelSearch.numberofpagemediam!.toString())
+                                  : widget.modelSearch.numberofpagemediam!
+                                      .toString())
                             ],
                           ),
                           Padding(
@@ -88,7 +97,73 @@ class Details extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(16),
                                   color: BookColor.orangebold),
                               child: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    final box = Hive.box<HiveBook>('HiveBook');
+                                    if (box.length > 0) {
+                                      bool validate = false;
+                                      box.values.forEach((element) {
+                                        if (element.title ==
+                                            widget.modelSearch.title) {
+                                          setState(() {
+                                            validate = true;
+                                          });
+                                        }
+                                      });
+                                      if (validate == true) {
+                                        ScaffoldMessenger.of(context)
+                                            .showMaterialBanner(MaterialBanner(
+                                                content: Text(
+                                                  'This book already exists in favorites',
+                                                  style:
+                                                      GoogleFonts.abhayaLibre(),
+                                                ),
+                                                actions: [
+                                              IconButton(
+                                                  onPressed: () {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .hideCurrentMaterialBanner();
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.close,
+                                                    color: BookColor.orangebold,
+                                                  ))
+                                            ]));
+                                      } else {
+                                        HiveBook hiveBook = HiveBook(
+                                            author: widget.modelSearch.author,
+                                            contributor:
+                                                widget.modelSearch.contributor,
+                                            description: widget.description,
+                                            editioncount:
+                                                widget.modelSearch.editioncount,
+                                            firtspublicyear: widget
+                                                .modelSearch.firtspublicyear,
+                                            numberofpagemediam: widget
+                                                .modelSearch.numberofpagemediam,
+                                            time: widget.modelSearch.time,
+                                            title: widget.modelSearch.title,
+                                            urlImg: widget.urlImage);
+                                        box.add(hiveBook);
+                                      }
+                                    } else {
+                                      HiveBook hiveBook = HiveBook(
+                                          author: widget.modelSearch.author,
+                                          contributor:
+                                              widget.modelSearch.contributor,
+                                          description: widget.description,
+                                          editioncount:
+                                              widget.modelSearch.editioncount,
+                                          firtspublicyear: widget
+                                              .modelSearch.firtspublicyear,
+                                          numberofpagemediam: widget
+                                              .modelSearch.numberofpagemediam,
+                                          time: widget.modelSearch.time,
+                                          title: widget.modelSearch.title,
+                                          urlImg: widget.urlImage);
+                                      box.add(hiveBook);
+                                    }
+                                  },
                                   icon: const Icon(
                                     Icons.favorite,
                                     color: Colors.white,
@@ -102,10 +177,12 @@ class Details extends StatelessWidget {
                                 'First Editions',
                                 style: GoogleFonts.abhayaLibre(),
                               ),
-                              Text(
-                                  modelSearch.firtspublicyear!.toString() == '0'
-                                      ? ''
-                                      : modelSearch.firtspublicyear!.toString())
+                              Text(widget.modelSearch.firtspublicyear!
+                                          .toString() ==
+                                      '0'
+                                  ? ''
+                                  : widget.modelSearch.firtspublicyear!
+                                      .toString())
                             ],
                           ),
                         ],
@@ -118,7 +195,7 @@ class Details extends StatelessWidget {
                 left: 0,
                 right: 0,
                 child: Container(
-                  height: responsive.hp(45),
+                  height: responsive.hp(42),
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(16),
@@ -147,7 +224,7 @@ class Details extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 20),
                             child: Text(
-                              modelSearch.title!,
+                              widget.modelSearch.title!,
                               style: GoogleFonts.abhayaLibre(
                                   textStyle: const TextStyle(fontSize: 24)),
                               textAlign: TextAlign.center,
@@ -157,7 +234,7 @@ class Details extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 5),
                             child: Text(
-                              modelSearch.author![0]!,
+                              widget.modelSearch.author![0]!,
                               style: GoogleFonts.abhayaLibre(
                                   textStyle: const TextStyle(fontSize: 24)),
                               textAlign: TextAlign.center,
@@ -167,7 +244,7 @@ class Details extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             child: Text(
-                              description,
+                              widget.description,
                               style: GoogleFonts.abhayaLibre(
                                   textStyle: const TextStyle(fontSize: 18)),
                               textAlign: TextAlign.justify,

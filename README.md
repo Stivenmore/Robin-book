@@ -30,7 +30,7 @@ se implementaron animaciones teniendo como principio Transform, Transition, Anim
 # ROBIN BOOK APP
 
 
-|  <img src="https://firebasestorage.googleapis.com/v0/b/spotify-ceae1.appspot.com/o/RB%2FWhatsApp%20Image%202022-01-24%20at%2016.43.21.jpeg?alt=media&token=a97d3c52-38a9-4a05-821e-0928bfba450a" width="250"> |
+|  <img src="https://firebasestorage.googleapis.com/v0/b/spotify-ceae1.appspot.com/o/RB%2FWhatsApp%20Image%202022-01-24%20at%2016.43.21.jpeg?alt=media&token=c8f9373e-9707-41f4-8f54-856b85460f4a" width="250"> |
 
  |  <img src="https://firebasestorage.googleapis.com/v0/b/spotify-ceae1.appspot.com/o/RB%2FWhatsApp%20Image%202022-01-24%20at%2000.46.09%20(1).jpeg?alt=media&token=23ea4b8d-b2b5-4dc4-ae84-52c943fca7f8" width="250"> |
  

@@ -115,17 +115,26 @@ class BookProvider with ChangeNotifier {
       printType: PrintType.books,
       orderBy: OrderBy.relevance,
     );
-    if (books[1].info.imageLinks.isNotEmpty &&
-        books[1].info.description != '') {
-      return {
-        "MapImage": books[1].info.imageLinks.values.first.toString(),
-        "Description": books[1].info.description
-      };
+    if (q.isNotEmpty) {
+      if (books[1].info.imageLinks.isNotEmpty &&
+          books[1].info.description != '') {
+        errorGlobal = '';
+        notifyListeners();
+        return {
+          "MapImage": books[1].info.imageLinks.values.first.toString(),
+          "Description": books[1].info.description
+        };
+      } else {
+        errorGlobal = '';
+        notifyListeners();
+        return {
+          "MapImage": books[2].info.imageLinks.values.first.toString(),
+          "Description": books[2].info.description
+        };
+      }
     } else {
-      return {
-        "MapImage": books[2].info.imageLinks.values.first.toString(),
-        "Description": books[2].info.description
-      };
+      errorGlobal = 'Parametro vacio';
+      notifyListeners();
     }
   }
 
@@ -136,6 +145,11 @@ class BookProvider with ChangeNotifier {
         modelsearch = (resp["data"]["docs"] as Iterable)
             .map((e) => ModelSearch.fromJson(e))
             .toList();
+        if (q == '') {
+          errorGlobal = 'Parametro vacio';
+        } else {
+          errorGlobal = '';
+        }
         notifyListeners();
         return modelsearch;
       } else {
@@ -172,6 +186,10 @@ class BookProvider with ChangeNotifier {
     debouncer.value = '';
     debouncer.onValue = (value) async {
       final results = await getSearchWorks(q: value);
+      if (results == null) {
+        errorGlobal = 'Parametro vacio';
+        notifyListeners();
+      }
       _suggestionStreamContoller.add(results);
     };
 

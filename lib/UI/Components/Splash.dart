@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:books/Logic/Provider/BookProvider.dart';
 import 'package:books/UI/Home/Home.dart';
 import 'package:books/UI/Utils/Animations/Sample/FadeAnimation.dart';
 import 'package:books/UI/Utils/Colors.dart';
@@ -7,6 +8,7 @@ import 'package:books/UI/Utils/Responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -18,15 +20,15 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   void initState() {
-    super.initState();
     intothehome(context);
+    super.initState();
   }
 
-  void intothehome(BuildContext context) {
-    Future.delayed(const Duration(seconds: 5), () {
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (_) => const Home()), (route) => false);
-    });
+  void intothehome(BuildContext context) async {
+    final provider = Provider.of<BookProvider>(context, listen: false);
+    await provider.initializate();
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (_) => const Home()), (route) => false);
   }
 
   @override

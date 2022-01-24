@@ -45,6 +45,7 @@ dependencies:
   injectable: ^1.2.1
   lottie: ^1.2.1
   google_fonts: ^2.2.0
+  books_finder: ^4.2.0
   
 
 dev_dependencies:

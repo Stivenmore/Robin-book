@@ -1,6 +1,8 @@
 // ignore_for_file: file_names
 
+import 'package:books/Logic/Models/Standart/ModelSearch.dart';
 import 'package:books/Logic/Provider/BookProvider.dart';
+import 'package:books/UI/Details/Details.dart';
 import 'package:books/UI/Search/Search.dart';
 import 'package:books/UI/Utils/Animations/Sample/FadeAnimation.dart';
 import 'package:books/UI/Utils/Colors.dart';
@@ -61,7 +63,7 @@ class _HomeState extends State<Home> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                 child: Text(
-                  'Es hora de \nleer!',
+                  "it's time to\nreading!",
                   style: GoogleFonts.abhayaLibre(
                       textStyle: const TextStyle(
                           fontSize: 38, fontWeight: FontWeight.w800)),
@@ -153,7 +155,7 @@ class _HomeState extends State<Home> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 20, vertical: 20),
                                     child: Text(
-                                      'Libros destacados',
+                                      'Featured books',
                                       style: GoogleFonts.abhayaLibre(
                                         textStyle:
                                             const TextStyle(fontSize: 20),
@@ -172,10 +174,45 @@ class _HomeState extends State<Home> {
                                                 SliverChildBuilderDelegate(
                                                     (context, index) {
                                           return GestureDetector(
-                                            onTap: () {
+                                            onTap: () async {
                                               setState(() {
                                                 des = index;
                                               });
+                                              final detailbook = await provider
+                                                  .getSearchForApiGoogle(
+                                                q: provider
+                                                    .modelsubjectlover[index]
+                                                    .title!,
+                                              );
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (_) => Details(
+                                                          description:
+                                                              detailbook[
+                                                                  "Description"],
+                                                          urlImage: detailbook[
+                                                              "MapImage"],
+                                                          modelSearch: ModelSearch(
+                                                              key: '',
+                                                              title: provider
+                                                                  .modelsubjectlover[
+                                                                      index]
+                                                                  .title!,
+                                                              editioncount: 0,
+                                                              firtspublicyear: 0,
+                                                              numberofpagemediam: 0,
+                                                              contributor: [],
+                                                              author: [
+                                                                provider
+                                                                    .modelsubjectlover[
+                                                                        index]
+                                                                    .authors![0]
+                                                                    .name
+                                                              ],
+                                                              time: [
+                                                                ''
+                                                              ]))));
                                             },
                                             child: FadeAnimation(
                                               (100 * index),
@@ -207,7 +244,7 @@ class _HomeState extends State<Home> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 20, vertical: 20),
                                     child: Text(
-                                      'Recomendaciones',
+                                      'Recommendations',
                                       style: GoogleFonts.abhayaLibre(
                                         textStyle:
                                             const TextStyle(fontSize: 20),
@@ -226,10 +263,45 @@ class _HomeState extends State<Home> {
                                                 SliverChildBuilderDelegate(
                                                     (context, index) {
                                           return GestureDetector(
-                                            onTap: () {
+                                            onTap: () async {
                                               setState(() {
                                                 des = index;
                                               });
+                                              final detailbook = await provider
+                                                  .getSearchForApiGoogle(
+                                                q: provider
+                                                    .modelsubjectaction[index]
+                                                    .title!,
+                                              );
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (_) => Details(
+                                                          description:
+                                                              detailbook[
+                                                                  "Description"],
+                                                          urlImage: detailbook[
+                                                              "MapImage"],
+                                                          modelSearch: ModelSearch(
+                                                              key: '',
+                                                              title: provider
+                                                                  .modelsubjectaction[
+                                                                      index]
+                                                                  .title!,
+                                                              editioncount: 0,
+                                                              firtspublicyear: 0,
+                                                              numberofpagemediam: 0,
+                                                              contributor: [],
+                                                              author: [
+                                                                provider
+                                                                    .modelsubjectaction[
+                                                                        index]
+                                                                    .authors![0]
+                                                                    .name
+                                                              ],
+                                                              time: [
+                                                                ''
+                                                              ]))));
                                             },
                                             child: FadeAnimation(
                                               (100 * index),

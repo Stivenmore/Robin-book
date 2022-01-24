@@ -9,5 +9,6 @@ class BookColor {
   static Color orangered = const Color(0xffFFA55D);
   static Color pinkshadow = const Color(0xffF3B1BC);
   static Color black = const Color(0xff000000);
+  static Color orangebold = const Color(0xffE65100);
   static Color red = Colors.red;
 }

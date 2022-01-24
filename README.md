@@ -49,7 +49,13 @@ se implementaron animaciones teniendo como principio Transform, Transition, Anim
 
  |  <img src="https://firebasestorage.googleapis.com/v0/b/spotify-ceae1.appspot.com/o/RB%2FWhatsApp%20Image%202022-01-24%20at%2016.43.21%20(1).jpeg?alt=media&token=75dfebb2-800a-4d5c-a073-8131df2990bd" width="250"> |
  
+ |  <img src="https://firebasestorage.googleapis.com/v0/b/spotify-ceae1.appspot.com/o/RB%2FWhatsApp%20Image%202022-01-24%20at%2016.50.55%20(1).jpeg?alt=media&token=938d5248-1783-4e8d-a277-05eafd4e90b4" width="250"> |
+ 
 
+|  <img src="https://firebasestorage.googleapis.com/v0/b/spotify-ceae1.appspot.com/o/RB%2FWhatsApp%20Image%202022-01-24%20at%2016.51.14.jpeg?alt=media&token=921cd0f0-6dd9-4a9b-8eca-37e58985e73b" width="250"> |
+
+
+ |  <img src="https://firebasestorage.googleapis.com/v0/b/spotify-ceae1.appspot.com/o/RB%2FWhatsApp%20Image%202022-01-24%20at%2016.50.55.jpeg?alt=media&token=efc12157-dc67-4832-ad0a-d0d34deaf76f" width="250"> |
 
 
 # Flutter
